@@ -240,6 +240,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/pump-monitoring-pwa/service-worker.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW failed:', err));
+  });
+}
+</script>
 
 </body>
 </html>
+
