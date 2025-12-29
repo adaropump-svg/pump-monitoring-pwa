@@ -1,36 +1,59 @@
-const CACHE_NAME = "adaro-pump-v1";
+const CACHE_NAME = "adaro-pump-v2";
+
+const BASE = "/pump-monitoring-pwa/";
 
 const ASSETS = [
-  "dashboard.html",
-  "ops.html",
-  "mon.html",
-  "hce.html",
-  "data-record.html",
-  "setting.html",
+  BASE,
+  BASE + "index.html",
+  BASE + "dashboard.html",
+  BASE + "ops.html",
+  BASE + "mon.html",
+  BASE + "hce.html",
+  BASE + "data-record.html",
+  BASE + "setting.html",
 
-  "manifest.json",
+  BASE + "manifest.json",
 
-  "assets/css/app-theme.css",
+  BASE + "assets/css/app-theme.css",
 
-  "assets/js/app-config.js",
-  "assets/js/app-setting.js",
-  "assets/js/data-record.js",
-  "assets/js/grafik.js",
+  BASE + "assets/js/app-config.js",
+  BASE + "assets/js/app-setting.js",
+  BASE + "assets/js/data-record.js",
+  BASE + "assets/js/grafik.js",
 
-  "assets/img/bg.jpg",
-  "assets/img/logo.png",
-  "assets/img/icon-192.png",
-  "assets/img/icon-512.png"
+  BASE + "assets/img/bg.jpg",
+  BASE + "assets/img/logo.png",
+  BASE + "assets/img/icon-192.png",
+  BASE + "assets/img/icon-512.png"
 ];
 
-self.addEventListener("install", e => {
-  e.waitUntil(
+/* === INSTALL === */
+self.addEventListener("install", event => {
+  event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+  );
+  self.skipWaiting(); // 🔴 WAJIB
+});
+
+/* === ACTIVATE === */
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+      )
+    )
+  );
+  self.clients.claim(); // 🔴 WAJIB
+});
+
+/* === FETCH === */
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request).then(
+      response => response || fetch(event.request)
+    )
   );
 });
 
-self.addEventListener("fetch", e => {
-  e.respondWith(
-    caches.match(e.request).then(res => res || fetch(e.request))
-  );
-});
+
