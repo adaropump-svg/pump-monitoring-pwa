@@ -1,30 +1,28 @@
-const CACHE_NAME = "adaro-pump-v2";
-
-const BASE = "/pump-monitoring-pwa/";
+const CACHE_NAME = "adaro-pump-v3";
 
 const ASSETS = [
-  BASE,
-  BASE + "index.html",
-  BASE + "dashboard.html",
-  BASE + "ops.html",
-  BASE + "mon.html",
-  BASE + "hce.html",
-  BASE + "data-record.html",
-  BASE + "setting.html",
+  "./",
+  "./index.html",
+  "./dashboard.html",
+  "./ops.html",
+  "./mon.html",
+  "./hce.html",
+  "./data-record.html",
+  "./setting.html",
 
-  BASE + "manifest.json",
+  "./manifest.json",
 
-  BASE + "assets/css/app-theme.css",
+  "./assets/css/app-theme.css",
 
-  BASE + "assets/js/app-config.js",
-  BASE + "assets/js/app-setting.js",
-  BASE + "assets/js/data-record.js",
-  BASE + "assets/js/grafik.js",
+  "./assets/js/app-config.js",
+  "./assets/js/app-setting.js",
+  "./assets/js/data-record.js",
+  "./assets/js/grafik.js",
 
-  BASE + "assets/img/bg.jpg",
-  BASE + "assets/img/logo.png",
-  BASE + "assets/img/icon-192.png",
-  BASE + "assets/img/icon-512.png"
+  "./assets/img/bg.jpg",
+  "./assets/img/logo.png",
+  "./assets/img/icon-192.png",
+  "./assets/img/icon-512.png"
 ];
 
 /* === INSTALL === */
@@ -32,7 +30,7 @@ self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
   );
-  self.skipWaiting(); // 🔴 WAJIB
+  self.skipWaiting();
 });
 
 /* === ACTIVATE === */
@@ -44,7 +42,7 @@ self.addEventListener("activate", event => {
       )
     )
   );
-  self.clients.claim(); // 🔴 WAJIB
+  self.clients.claim();
 });
 
 /* === FETCH === */
@@ -55,5 +53,6 @@ self.addEventListener("fetch", event => {
     )
   );
 });
+
 
 
