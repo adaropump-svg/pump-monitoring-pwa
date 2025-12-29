@@ -1,9 +1,11 @@
 {
+  "id": "/pump-monitoring-pwa/",
   "name": "Adaro Pump Monitoring",
-  "short_name": "Pump Monitoring",
+  "short_name": "Pump Monitor",
   "start_url": "/pump-monitoring-pwa/index.html",
   "scope": "/pump-monitoring-pwa/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#0b4a8b",
   "icons": [
@@ -19,5 +21,7 @@
     }
   ]
 }
+
+
 
 
