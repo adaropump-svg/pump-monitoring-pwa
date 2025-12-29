@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#003366">
-<link rel="manifest" href="manifest.json">
+
+<!-- 🔴 PENTING: path manifest HARUS RELATIF -->
+<link rel="manifest" href="./manifest.json">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +15,7 @@
 <style>
 *{
   box-sizing:border-box;
-  font-family:'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;
 }
 
 body{
@@ -45,10 +47,6 @@ body::before{
   border-radius:18px;
   text-align:center;
   box-shadow:0 12px 35px rgba(0,0,0,0.2);
-}
-
-.login-header{
-  margin-bottom:20px;
 }
 
 .title-main{
@@ -184,8 +182,18 @@ function login(){
 
 <script src="assets/js/app-setting.js"></script>
 
+<!-- 🔴 INI YANG SEBELUMNYA TIDAK ADA -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js')
+    .then(reg => console.log('SW aktif:', reg.scope))
+    .catch(err => console.error('SW gagal:', err));
+}
+</script>
+
 </body>
 </html>
+
 
 
 
