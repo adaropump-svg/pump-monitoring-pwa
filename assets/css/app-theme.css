@@ -1,0 +1,152 @@
+/* =====================================================
+   GLOBAL APP THEME
+   ADARO PUMP MONITORING
+   FINAL STABLE VERSION
+===================================================== */
+
+/* =========================
+   RESET GLOBAL
+========================= */
+*{
+  box-sizing:border-box;
+  font-family:"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+/* =========================
+   BODY GLOBAL
+========================= */
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url("../img/bg.jpg") center center no-repeat;
+  background-size:cover;
+  background-attachment:fixed;
+  color:#fff;
+}
+
+/* =========================
+   HEADER DEFAULT
+   (UNTUK OPS / MON / HCE)
+========================= */
+header{
+  text-align:center;
+  padding:30px 20px 15px;
+  margin:0 auto 20px;
+  max-width:1200px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  border-radius:0 0 18px 18px;
+}
+
+header img{
+  max-width:90px;
+  margin-bottom:10px;
+}
+
+header h1{
+  font-size:24px;
+  margin:10px 0 5px;
+}
+
+header p{
+  font-size:14px;
+  opacity:.9;
+}
+
+/* =========================
+   CONTAINER GLOBAL
+========================= */
+.container{
+  max-width:1200px;
+  margin:0 auto 30px;
+  background:rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:20px;
+}
+
+/* =========================
+   BUTTON BACK
+========================= */
+.btn-back{
+  position:fixed;
+  top:15px;
+  left:15px;
+  background:#fff;
+  color:#003366;
+  padding:10px 16px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  z-index:999;
+}
+
+/* =====================================================
+   🔥 HARD OVERRIDE — DATA RECORD ONLY
+   (NO BLUR, NO BOX, NO PANEL)
+===================================================== */
+body[data-page="data-record"] header{
+  background:transparent !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+  margin-bottom:10px;
+  padding:60px 20px 20px;
+}
+
+body[data-page="data-record"] header::before,
+body[data-page="data-record"] header::after{
+  content:none !important;
+  display:none !important;
+}
+
+body[data-page="data-record"] header *{
+  background:transparent !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  box-shadow:none !important;
+}
+
+/* CONTAINER DATA RECORD */
+body[data-page="data-record"] .container{
+  background:rgba(255,255,255,.12);
+  box-shadow:none;
+}
+
+/* =========================
+   TABLE GLOBAL
+========================= */
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  color:#003366;
+}
+
+th,td{
+  border:1px solid #ccc;
+  padding:8px;
+  font-size:13px;
+}
+
+th{
+  background:#f2f4f6;
+}
+
+/* =========================
+   FORM GLOBAL
+========================= */
+label{
+  font-size:13px;
+  font-weight:600;
+}
+
+select,
+input,
+button{
+  font-size:13px;
+}

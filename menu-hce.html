@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>MENU HCE - ADARO PUMP MONITORING</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b1c2d">
+
+<!-- CSS GLOBAL -->
+<link rel="stylesheet" href="assets/css/app-theme.css">
+
+<!-- CONFIG -->
+<script src="assets/js/app-config.js" defer></script>
+
+<style>
+*{box-sizing:border-box;font-family:"Segoe UI",Roboto,Arial,sans-serif}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url("assets/img/bg.jpg") center center no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color:#003366;
+}
+
+.btn-back{
+  position:fixed;top:15px;left:15px;
+  background:#fff;color:#003366;
+  padding:8px 14px;border-radius:6px;
+  font-weight:600;text-decoration:none;z-index:999;
+}
+header{
+  text-align:center;padding:60px 20px 15px;color:#fff
+}
+header img{max-width:85px}
+header h1{margin:10px 0 5px;font-size:22px}
+header p{font-size:13px;opacity:.9}
+
+.container{
+  max-width:1000px;
+  margin:0 auto 30px;
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+}
+
+.row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px}
+label{font-size:13px;font-weight:600;margin-bottom:4px;display:block}
+input,select,textarea{
+  width:100%;padding:6px;font-size:13px;
+  border:1px solid #ccc;border-radius:5px
+}
+textarea{height:40px;resize:none}
+
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{
+  border:1px solid #ccc;
+  padding:6px;font-size:13px
+}
+th{background:#f2f4f6}
+
+select.status{width:90px;padding:4px}
+
+.btn-save{
+  margin-top:20px;
+  width:100%;padding:12px;
+  background:#004f9f;color:#fff;
+  border:none;border-radius:8px;
+  font-size:15px;font-weight:600;cursor:pointer
+}
+.btn-save:hover{background:#003366}
+
+@media(max-width:768px){
+  .row{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<a href="dashboard.html" class="btn-back">⬅ Menu Utama</a>
+
+<header>
+  <img src="assets/img/logo.png">
+  <h1>MENU HCE</h1>
+  <p>Formulir pemeriksaan kesehatan equipment – 1 kali setiap shift</p>
+</header>
+
+<div class="container">
+<form id="opsForm">
+
+<!-- HEADER FORM -->
+<div class="row">
+  <div>
+    <label>Tanggal</label>
+    <input type="date" id="tgl" readonly>
+  </div>
+  <div>
+    <label>Jam</label>
+    <input type="time" id="jam" readonly>
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <label>Lokasi</label>
+    <select id="lokasi">
+      <option value="">Pilih Lokasi</option>
+      <option value="adaro">Adaro Indonesia</option>
+      <option value="sis">Sis ADMO</option>
+      <option value="sera">Sera</option>
+      <option value="maco">Maco</option>
+    </select>
+  </div>
+  <div>
+    <label>Shift</label>
+<select id="shift">
+  <option value="siang">Siang (06.00–18.00)</option>
+  <option value="malam">Malam (18.00–06.00)</option>
+</select>
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <label>Jenis Pompa</label>
+    <select id="jenisPompa">
+      <option value="">Pilih</option>
+      <option value="elektrik">Elektrik Pump</option>
+      <option value="diesel">Diesel Pump</option>
+    </select>
+  </div>
+  <div>
+    <label>Code Unit</label>
+    <select id="codeUnit">
+      <option value="">Pilih Code Unit</option>
+    </select>
+  </div>
+</div>
+
+<!-- TABLE CHECKLIST (UTUH) -->
+<table>
+<thead>
+<tr>
+  <th>Equipment</th>
+  <th>Status</th>
+  <th>Catatan (Max 30 kata)</th>
+</tr>
+</thead>
+<tbody>
+
+<!-- ================= ELEKTRIK ================= -->
+<tr class="elektrik" data-equipment="PUMP"><td>PUMP</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="MOTOR"><td>MOTOR</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="COUPLING"><td>COUPLING</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="SUCTION HOSE"><td>SUCTION HOSE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="STRAINER"><td>STRAINER</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="NRV"><td>NRV</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="BUTTERFLY VALVE"><td>BUTTERFLY VALVE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="DISCHARGE PIPE"><td>DISCHARGE PIPE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="FLOWMETER"><td>FLOWMETER</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="CABLE POWER"><td>CABLE POWER</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="CABLE PRIMING"><td>CABLE PRIMING</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="PANEL PUMP"><td>PANEL PUMP</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="PANEL VSD"><td>PANEL VSD</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="WORK LAMP"><td>WORK LAMP</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="STROBE LAMP"><td>STROBE LAMP</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="GLAND PACKING"><td>GLAND PACKING</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="PONTOON"><td>PONTOON</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="APAR"><td>APAR</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="RING BUOY"><td>RING BUOY</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="BOLT TIGHTNESS"><td>BOLT TIGHTNESS</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="BARESHAFT LUBRICANT"><td>BARESHAFT LUBRICANT</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="PRESSURE GAUGE"><td>PRESSURE GAUGE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="PUMP PAINT COLOR"><td>PUMP PAINT COLOR</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="BOOM"><td>BOOM</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="elektrik" data-equipment="CHAIN BOOM"><td>CHAIN BOOM</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+
+<!-- ================= DIESEL ================= -->
+<tr class="diesel" data-equipment="ENGINE"><td>ENGINE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="RADIATOR"><td>RADIATOR</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="OIL ENGINE"><td>OIL ENGINE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="COOLANT LEVEL"><td>COOLANT LEVEL</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="PUMP"><td>PUMP</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="COUPLING"><td>COUPLING</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="SUCTION HOSE"><td>SUCTION HOSE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="STRAINER"><td>STRAINER</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="NRV"><td>NRV</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="BUTTERFLY VALVE"><td>BUTTERFLY VALVE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="DISCHARGE PIPE"><td>DISCHARGE PIPE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="FLOWMETER"><td>FLOWMETER</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="PANEL PUMP"><td>PANEL PUMP</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="WORK LAMP"><td>WORK LAMP</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="STROBE LAMP"><td>STROBE LAMP</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="GLAND PACKING"><td>GLAND PACKING</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="PONTOON"><td>PONTOON</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="APAR"><td>APAR</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="RING BUOY"><td>RING BUOY</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="BOLT TIGHTNESS"><td>BOLT TIGHTNESS</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="BARESHAFT LUBRICANT"><td>BARESHAFT LUBRICANT</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="PRESSURE GAUGE"><td>PRESSURE GAUGE</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="PUMP PAINT COLOR"><td>PUMP PAINT COLOR</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="BOOM"><td>BOOM</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+<tr class="diesel" data-equipment="CHAIN BOOM"><td>CHAIN BOOM</td><td><select class="status"><option>OK</option><option>NOT OK</option></select></td><td><textarea></textarea></td></tr>
+
+</tbody>
+
+</table>
+
+<button class="btn-save" type="submit">SIMPAN</button>
+
+</form>
+</div>
+
+<script>
+/* tanggal & jam */
+const now=new Date();
+tgl.value=now.toISOString().slice(0,10);
+jam.value=now.toTimeString().slice(0,5);
+
+/* lokasi → unit */
+const dataUnit={
+  adaro:["MP 01","MP 02","MP 06","MP 08","BP 01","BP 02"],
+  sis:["ATS 100","ATS 150","ATS 200"],
+  sera:["ATS 131","ATS 132","ATS 134","ATS 321"],
+  maco:["ATS 211","ATS 213","ATS 214"]
+};
+
+lokasi.onchange = () => {
+  // reset Code Unit
+  codeUnit.innerHTML = '<option value="">Pilih Code Unit</option>';
+
+  // reset Jenis Pompa
+  jenisPompa.value = "";
+
+  // sembunyikan semua checklist
+  document.querySelectorAll("tbody tr").forEach(tr => {
+    tr.style.display = "none";
+  });
+
+  // isi Code Unit sesuai lokasi
+  (dataUnit[lokasi.value] || []).forEach(u => {
+    const o = document.createElement("option");
+    o.value = u;
+    o.textContent = u;
+    codeUnit.appendChild(o);
+  });
+};
+
+
+jjenisPompa.onchange = () => {
+  if (!lokasi.value || !codeUnit.value) {
+    alert("Pilih Lokasi dan Code Unit dulu");
+    jenisPompa.value = "";
+    return;
+  }
+
+  document.querySelectorAll("tbody tr").forEach(tr => {
+    tr.style.display = "none";
+  });
+
+  document.querySelectorAll(`.${jenisPompa.value}`).forEach(tr => {
+    tr.style.display = "table-row";
+  });
+};
+
+</script>
+
+<script src="assets/js/app-setting.js"></script>
+
+<script>
+/* SUBMIT HCE */
+document.getElementById("opsForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  if(!lokasi.value || !codeUnit.value || !jenisPompa.value){
+    alert("Lengkapi Lokasi, Code Unit, dan Jenis Pompa");
+    return;
+  }
+
+  const checklist=[];
+  document.querySelectorAll(`tbody tr.${jenisPompa.value}`).forEach(row=>{
+    checklist.push({
+      equipment: row.dataset.equipment,
+      status: row.querySelector(".status").value,
+      note: row.querySelector("textarea").value.trim()
+    });
+  });
+
+  const record={
+    kategori:"HCE",
+    tanggal:tgl.value,
+    jam:jam.value,
+    lokasi:lokasi.value,
+    codeUnit:codeUnit.value,
+    shift:shift.value,
+    jenisPompa:jenisPompa.value,
+    data:checklist
+  };
+
+  const DATA_RECORD=JSON.parse(localStorage.getItem("DATA_RECORD"))||[];
+  DATA_RECORD.push(record);
+  localStorage.setItem("DATA_RECORD",JSON.stringify(DATA_RECORD));
+
+  alert("Data HCE berhasil disimpan");
+  this.reset();
+});
+document.querySelectorAll(".elektrik,.diesel").forEach(r=>{
+  r.style.display="none";
+});
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>

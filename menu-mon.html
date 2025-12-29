@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>MENU MONITORING</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b1c2d">
+
+<!-- Script global (jangan diubah) -->
+<script src="assets/js/app-config.js" defer></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Segoe UI, Arial;
+}
+
+body{
+  margin:0;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url("assets/img/bg.jpg") center/cover no-repeat fixed;
+  color:#003366;
+}
+
+/* tombol back */
+.btn-back{
+  position:fixed;
+  top:15px;
+  left:15px;
+  background:#fff;
+  color:#003366;
+  padding:10px 16px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:600;
+  z-index:9;
+}
+
+/* header */
+header{
+  text-align:center;
+  padding:70px 20px 20px;
+  color:#fff;
+}
+
+/* kontainer utama */
+.container{
+  max-width:1100px;
+  margin:0 auto 40px;
+  background:#fff;
+  border-radius:14px;
+  padding:25px;
+}
+
+/* layout form */
+.row{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-bottom:15px;
+}
+
+label{
+  font-weight:600;
+  font-size:14px;
+}
+
+input, select{
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+
+/* tabel */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+
+th, td{
+  border:1px solid #ccc;
+  padding:8px;
+  text-align:left;
+}
+
+th{
+  background:#004f9f;
+  color:#fff;
+}
+
+.unit{
+  text-align:center;
+  width:90px;
+}
+
+/* tombol simpan */
+.btn-save{
+  margin-top:25px;
+  width:100%;
+  padding:14px;
+  background:#004f9f;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:600;
+}
+
+@media(max-width:768px){
+  .row{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<a href="dashboard.html" class="btn-back">⬅ Menu Utama</a>
+
+<header>
+  <h1>MENU INPUT DATA MONITORING</h1>
+  <p>Input dilakukan 1 kali setiap shift</p>
+</header>
+
+<div class="container">
+<form id="opsForm">
+
+  <div class="row">
+    <div>
+      <label>Tanggal</label>
+      <input type="date" id="tanggal" readonly>
+    </div>
+    <div>
+      <label>Jam</label>
+      <input type="time" id="jam" readonly>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label>Lokasi</label>
+      <select id="lokasi">
+        <option value="">-- Pilih Lokasi --</option>
+        <option value="adaro">Adaro Indonesia</option>
+        <option value="sis">Sis ADMO</option>
+        <option value="sera">Sera</option>
+        <option value="maco">Maco</option>
+      </select>
+    </div>
+    <div>
+      <label>Shift</label>
+      <select>
+        <option>Siang (06.00 - 18.00)</option>
+        <option>Malam (18.00 - 06.00)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label>Jenis Pompa</label>
+      <select id="jenisPompa">
+        <option value="">-- Pilih --</option>
+        <option value="elektrik">Elektrik Pump</option>
+        <option value="diesel">Diesel Pump</option>
+      </select>
+    </div>
+    <div>
+      <label>Code Unit</label>
+      <select id="codeUnit">
+        <option value="">-- Pilih Code Unit --</option>
+      </select>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Posisi</th>
+        <th>Nilai</th>
+        <th class="unit">Satuan</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- ELEKTRIK -->
+      <tr class="elektrik"><td>Motor Temperature</td><td>DE</td><td><input></td><td>°C</td></tr>
+      <tr class="elektrik"><td></td><td>NDE</td><td><input></td><td>°C</td></tr>
+      <tr class="elektrik"><td>Motor Vibration</td><td>Axial</td><td><input></td><td>MM/s</td></tr>
+      <tr class="elektrik"><td></td><td>Horizontal</td><td><input></td><td>MM/s</td></tr>
+      <tr class="elektrik"><td></td><td>Vertical</td><td><input></td><td>MM/s</td></tr>
+      <tr class="elektrik"><td>Bareshaft Temperature</td><td>DE</td><td><input></td><td>°C</td></tr>
+      <tr class="elektrik"><td></td><td>NDE</td><td><input></td><td>°C</td></tr>
+      <tr class="elektrik"><td>Bareshaft Vibration</td><td>Axial</td><td><input></td><td>MM/s</td></tr>
+      <tr class="elektrik"><td></td><td>Horizontal</td><td><input></td><td>MM/s</td></tr>
+      <tr class="elektrik"><td></td><td>Vertical</td><td><input></td><td>MM/s</td></tr>
+      <tr class="elektrik"><td>Thermal Temperature</td><td>-</td><td><input></td><td>°C</td></tr>
+      <tr class="elektrik"><td>Flowrate</td><td>-</td><td><input></td><td>M3/Jam</td></tr>
+      <tr class="elektrik"><td>Voltage</td><td>-</td><td><input></td><td>V</td></tr>
+      <tr class="elektrik"><td>Current</td><td>-</td><td><input></td><td>A</td></tr>
+
+      <!-- DIESEL -->
+      <tr class="diesel"><td>Bareshaft Temperature</td><td>DE</td><td><input></td><td>°C</td></tr>
+      <tr class="diesel"><td></td><td>NDE</td><td><input></td><td>°C</td></tr>
+      <tr class="diesel"><td>Bareshaft Vibration</td><td>Axial</td><td><input></td><td>MM/s</td></tr>
+      <tr class="diesel"><td></td><td>Horizontal</td><td><input></td><td>MM/s</td></tr>
+      <tr class="diesel"><td></td><td>Vertical</td><td><input></td><td>MM/s</td></tr>
+      <tr class="diesel"><td>Engine Vibration</td><td>Axial</td><td><input></td><td>MM/s</td></tr>
+      <tr class="diesel"><td></td><td>Horizontal</td><td><input></td><td>MM/s</td></tr>
+      <tr class="diesel"><td></td><td>Vertical</td><td><input></td><td>MM/s</td></tr>
+      <tr class="diesel"><td>Fuel Rate</td><td>-</td><td><input></td><td>Liter/Jam</td></tr>
+      <tr class="diesel"><td>Engine Load</td><td>-</td><td><input></td><td>%</td></tr>
+      <tr class="diesel"><td>Collant Temperature</td><td>-</td><td><input></td><td>°C</td></tr>
+
+      <tr><td>Suction Pressure</td><td>-</td><td><input></td><td>Bar</td></tr>
+      <tr><td>Discharge Pressure</td><td>-</td><td><input></td><td>Bar</td></tr>
+
+    </tbody>
+  </table>
+
+  <button class="btn-save" type="submit">SIMPAN</button>
+
+</form>
+</div>
+
+<script>
+const now = new Date();
+
+document.getElementById("tanggal").value =
+  now.toISOString().slice(0,10);
+
+document.getElementById("jam").value =
+  now.toTimeString().slice(0,5);
+
+const unitData = {
+  adaro:["MP 01","MP 02","MP 06","MP 08","BP 01","BP 02"],
+  sis:Array.from({length:101},(_,i)=>"ATS "+(100+i)),
+  sera:["ATS 131","ATS 132","ATS 134","ATS 321"],
+  maco:["ATS 211","ATS 213","ATS 214"]
+};
+
+lokasi.onchange = ()=>{
+  codeUnit.innerHTML='<option>-- Pilih Code Unit --</option>';
+  (unitData[lokasi.value]||[]).forEach(u=>{
+    let o=document.createElement("option");
+    o.text=u;
+    codeUnit.add(o);
+  });
+};
+
+jenisPompa.onchange = ()=>{
+  document.querySelectorAll(".elektrik").forEach(e=>e.style.display=
+    jenisPompa.value==="elektrik"?"table-row":"none");
+  document.querySelectorAll(".diesel").forEach(e=>e.style.display=
+    jenisPompa.value==="diesel"?"table-row":"none");
+};
+
+document.getElementById("opsForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  let DATA_RECORD = JSON.parse(localStorage.getItem("DATA_RECORD")) || [];
+
+  const dataMON = {
+    kategori: "MON",
+    tanggal: document.getElementById("tanggal").value,
+    jam: document.getElementById("jam").value,
+    lokasi: document.getElementById("lokasi").value,
+    codeUnit: document.getElementById("codeUnit").value,
+    shift: document.querySelector("select:nth-of-type(2)").value,
+    jenisPompa: document.getElementById("jenisPompa").value,
+    data: {},
+    createdAt: new Date().toISOString()
+  };
+
+  document.querySelectorAll("tbody input").forEach((input, i) => {
+    if (input.value !== "") {
+      dataMON.data["param_" + i] = input.value;
+    }
+  });
+
+  DATA_RECORD.push(dataMON);
+  localStorage.setItem("DATA_RECORD", JSON.stringify(DATA_RECORD));
+
+  alert("Data Monitoring berhasil disimpan");
+
+  setTimeout(() => {
+    e.target.reset();
+  }, 150);
+});
+
+
+</script>
+<script src="app-setting.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>

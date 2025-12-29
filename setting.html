@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Pengaturan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b1c2d">
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI, Arial, sans-serif;
+  background:#f4f6f8;
+  color:#003366;
+}
+header{
+  background:#003366;
+  color:#fff;
+  padding:16px;
+  text-align:center;
+}
+.container{
+  max-width:600px;
+  margin:20px auto;
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+}
+.group{
+  margin-bottom:20px;
+}
+label{
+  display:block;
+  font-weight:600;
+  margin-bottom:6px;
+}
+select{
+  width:100%;
+  padding:10px;
+  font-size:14px;
+}
+.note{
+  font-size:12px;
+  color:#666;
+  margin-top:4px;
+}
+.btn-back{
+  position:fixed;
+  top:15px;
+  left:15px;
+  background:#fff;
+  color:#003366;
+  padding:8px 14px;
+  border-radius:6px;
+  font-weight:600;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<a href="dashboard.html" class="btn-back" data-i18n="btn.back">⬅ Menu Utama</a>
+
+
+<header>
+  <h2 data-i18n="menu.setting">MENU PENGATURAN</h2>
+  <p data-i18n="setting.subtitle">Preferensi tampilan & bahasa</p>
+</header>
+
+
+<div class="container">
+
+  <div class="group">
+    <label data-i18n="setting.language">Bahasa Tampilan</label>
+    <select id="lang">
+      <option value="id">Bahasa Indonesia</option>
+      <option value="en">English</option>
+    </select>
+    <div class="note">Mengubah bahasa di seluruh menu</div>
+  </div>
+
+  <div class="group">
+    <label data-i18n="setting.orientation">Orientasi Tampilan</label>
+    <select id="orientation">
+      <option value="auto">Auto</option>
+      <option value="portrait">Portrait</option>
+      <option value="landscape">Landscape</option>
+    </select>
+    <div class="note">Untuk tablet / HP lapangan</div>
+  </div>
+
+  <div class="group">
+    <label data-i18n="setting.theme">Tema Tampilan</label>
+    <select id="theme">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="auto">Auto (System)</option>
+    </select>
+    <div class="note">Tema visual aplikasi</div>
+  </div>
+
+</div>
+
+<script>
+const lang = document.getElementById("lang");
+const orientation = document.getElementById("orientation");
+const theme = document.getElementById("theme");
+
+/* Load saved setting */
+lang.value = localStorage.getItem("appLang") || "id";
+orientation.value = localStorage.getItem("appOrientation") || "auto";
+theme.value = localStorage.getItem("appTheme") || "light";
+
+/* Save on change */
+lang.onchange = () => {
+  localStorage.setItem("appLang", lang.value);
+
+  // 🔁 Apply language langsung (tanpa reload)
+  if (window.applyLanguage) {
+    applyLanguage();
+  }
+};
+
+orientation.onchange = () => {
+  localStorage.setItem("appOrientation", orientation.value);
+};
+
+theme.onchange = () => {
+  localStorage.setItem("appTheme", theme.value);
+};
+</script>
+
+
+<script src="lang-data.js"></script>
+<script src="i18n.js"></script>
+<script src="app-setting.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>
+
+

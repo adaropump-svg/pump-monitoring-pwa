@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>DASHBOARD - ADARO PUMP MONITORING</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1c2d">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="assets/css/app-theme.css">
+<script src="assets/js/app-config.js" defer></script>
+
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+  
+
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      text-align: center;
+      padding: 20px 20px 10px;
+    }
+
+    /* BACK BUTTON DI HEADER */
+    .btn-back {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      background: #ffffff;
+      color: #003366;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    }
+
+    .btn-back:hover {
+      background: #004f9f;
+      color: #fff;
+    }
+
+    header img {
+      max-width: 110px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-size: 26px;
+      margin: 10px 0 5px;
+      letter-spacing: 1px;
+    }
+
+    header h2 {
+      font-size: 15px;
+      font-weight: normal;
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .welcome {
+      max-width: 900px;
+      margin: 0 auto 25px;
+      padding: 0 20px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .menu-title {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .menu-subtitle {
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 25px;
+      opacity: 0.85;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      padding: 0 20px;
+      max-width: 900px;
+      margin: 0 auto 30px;
+    }
+
+    .menu-item {
+      background: #ffffff;
+      color: #003366;
+      padding: 22px 10px;
+      text-align: center;
+      border-radius: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s;
+      text-decoration: none;
+    }
+
+    .menu-item:hover {
+      background: #004f9f;
+      color: #ffffff;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 15px;
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 768px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .menu-disabled{
+  opacity:0.4;
+  pointer-events:none;
+  filter:grayscale(100%);
+}
+.menu-title {
+  margin-bottom: 20px; /* sebelumnya 5px → terlalu mepet */
+}
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="btn-back">⬅ Logout</a>
+  <img src="assets/img/logo.png" alt="Logo Adaro">
+  <h1>ADARO TIRTA SARANA</h1>
+</header>
+
+<div class="welcome">
+  <strong>WELCOME TO THE PUMP MONITORING & PERFORMANCE APPLICATION</strong><br><br>
+  Enter data honestly for the sustainability of excellent operations.<br><br>
+  <em>
+    – Be Safe, Be More Smart People –<br>
+                
+  </em>
+</div>
+
+<div class="menu-title">MAIN MENU</div>
+
+
+<div class="menu-grid">
+  <a href="menu-ops.html" class="menu-item" data-role="input">MENU OPS</a>
+  <a href="menu-mon.html" class="menu-item" data-role="input">MENU MON</a>
+  <a href="menu-hce.html" class="menu-item" data-role="input">MENU HCE</a>
+
+  <a href="data-record.html" class="menu-item" data-role="all">DATA RECORD</a>
+  <a href="grafik.html" class="menu-item" data-role="all">DASBOARD</a>
+  <a href="setting.html" class="menu-item" data-role="all">SETTING</a>
+</div>
+
+<footer>
+  app create by : wahyu.effendi@adaro.com
+</footer>
+
+<script>
+  const loginMode = sessionStorage.getItem("loginMode");
+  if (!loginMode) {
+    window.location.href = "index.html";
+  }
+
+(function(){
+  const mode = sessionStorage.getItem("loginMode");
+
+  document.querySelectorAll("[data-role]").forEach(menu => {
+    const role = menu.getAttribute("data-role");
+
+    if(role === "input" && mode !== "input"){
+      menu.classList.add("menu-disabled");
+      menu.removeAttribute("href");
+    }
+  });
+})();
+</script>
+<script src="app-setting.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>GRAFIK - ADARO PUMP MONITORING</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b1c2d">
+
+<!-- THEME GLOBAL -->
+<link rel="stylesheet" href="assets/css/app-theme.css">
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+<!-- EXPORT PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- DATA & LOGIC -->
+<script src="assets/js/data-record.js"></script>
+<script src="assets/js/grafik.js" defer></script>
+
+<style>
+
+
+.btn-back{
+  position:fixed;
+  top:15px;
+  left:15px;
+  background:#fff;
+  color:#003366;
+  padding:8px 14px;
+  border-radius:6px;
+  font-weight:600;
+  text-decoration:none;
+  z-index:999;
+}
+
+
+
+.filter-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:12px;
+  margin-bottom:15px;
+}
+
+label{
+  font-size:13px;
+  font-weight:600;
+  color:#003366;
+}
+
+select{
+  width:100%;
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+.chart-box{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+}
+
+.btn-export{
+  padding:10px 16px;
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+  color:#fff;
+}
+
+.btn-export.png{ background:#1d6f42; }
+.btn-export.pdf{ background:#b02a37; }
+
+@media(max-width:900px){
+  .filter-grid{grid-template-columns:repeat(2,1fr)}
+}
+/* =========================
+   HEADER (SAMA DENGAN MENU LAIN)
+========================= */
+header{
+  text-align:center;
+  padding:60px 20px 20px;
+  color:#fff;
+}
+
+header img{
+  max-width:85px;
+}
+
+header h1{
+  margin:10px 0 5px;
+  font-size:22px;
+}
+
+header p{
+  font-size:13px;
+  opacity:.9;
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="dashboard.html" class="btn-back">⬅ Menu Utama</a>
+<header>
+  <img src="assets/img/logo.png">
+  <h1>MENU GRAFIK</h1>
+  <p>Visualisasi performa pompa berdasarkan data operasional</p>
+</header>
+
+<div class="container">
+
+<div class="filter-grid">
+
+  <div>
+    <label>Lokasi</label>
+    <select id="lokasi">
+      <option value="all">All Location</option>
+      <option value="adaro">Adaro Indonesia</option>
+      <option value="sis">SIS Admo</option>
+      <option value="sera">Sera</option>
+      <option value="maco">Maco</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Grafik Kategori</label>
+    <select id="kategori">
+      <option value="volume">Volume (M3)</option>
+      <option value="elevasi">Elevasi (M)</option>
+      <option value="kwh">KWH Listrik</option>
+      <option value="fuel">Fuel Consumption</option>
+      <option value="running">Running Hour</option>
+      <option value="hec">HEC Pareto</option>
+      <option value="pareto">Pareto Komponen</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Code Unit</label>
+    <select id="unit" disabled>
+      <option value="">-- Pilih Unit --</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Tahun</label>
+    <select id="tahun"></select>
+  </div>
+
+  <div>
+    <label>Bulan</label>
+    <select id="bulan">
+      <option value="yearly">Yearly</option>
+      <option value="0">Jan</option>
+      <option value="1">Feb</option>
+      <option value="2">Mar</option>
+      <option value="3">Apr</option>
+      <option value="4">Mei</option>
+      <option value="5">Jun</option>
+      <option value="6">Jul</option>
+      <option value="7">Agu</option>
+      <option value="8">Sep</option>
+      <option value="9">Okt</option>
+      <option value="10">Nov</option>
+      <option value="11">Des</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Tanggal</label>
+    <select id="tanggal">
+      <option value="">-- Optional --</option>
+    </select>
+  </div>
+
+</div>
+
+<div style="display:flex;gap:10px;margin-bottom:15px">
+  <button class="btn-export png" onclick="exportPNG()">Export PNG</button>
+  <button class="btn-export pdf" onclick="exportPDF()">Export PDF</button>
+</div>
+
+<div class="chart-box">
+  <canvas id="chartGrafik"></canvas>
+</div>
+
+</div>
+
+<script src="app-setting.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>

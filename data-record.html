@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>DATA RECORD - ADARO PUMP MONITORING</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b1c2d">
+
+<!-- CONFIG (TETAP DIPAKAI, TIDAK BERURUSAN DENGAN STYLE) -->
+<script src="assets/js/app-config.js" defer></script>
+
+<!-- PDF -->
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
+
+<style>
+/* ==================================================
+   RESET & BODY (IDENTIK OPS / HCE)
+================================================== */
+*{
+  box-sizing:border-box;
+  font-family:"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url("assets/img/bg.jpg") center center no-repeat;
+  background-size:cover;
+  background-attachment:fixed;
+  color:#ffffff;
+  padding-bottom:30px;
+}
+
+/* ==================================================
+   BACK BUTTON (OPS / HCE)
+================================================== */
+.btn-back{
+  position:fixed;
+  top:15px;
+  left:15px;
+  background:#fff;
+  color:#003366;
+  padding:10px 16px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  z-index:999;
+}
+
+/* ==================================================
+   HEADER — POLOS TOTAL (NO BLUR, NO PANEL)
+================================================== */
+header{
+  text-align:center;
+  padding:60px 20px 20px;
+  background:transparent;
+  box-shadow:none;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+
+header *{
+  background:transparent;
+  box-shadow:none;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+
+header img{
+  max-width:90px;
+  margin-bottom:10px;
+}
+
+header h1{
+  font-size:24px;
+  margin:10px 0 5px;
+}
+
+header p{
+  font-size:14px;
+  opacity:.9;
+}
+
+/* ==================================================
+   CONTAINER ISI
+================================================== */
+.container{
+  max-width:1200px;
+  margin:0 auto 30px;
+  background:rgba(255, 255, 255, 0);
+  border-radius:14px;
+  padding:20px;
+}
+
+/* ==================================================
+   FILTER
+================================================== */
+.filter-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+}
+
+label{
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:4px;
+  display:block;
+}
+
+select{
+  width:100%;
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  font-size:13px;
+}
+
+/* ==================================================
+   ACTION BAR
+================================================== */
+.action-bar{
+  margin:15px 0;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.action-bar button{
+  padding:10px 14px;
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.btn-search{background:#004f9f;color:#fff}
+.btn-excel{background:#2e7d32;color:#fff}
+.btn-pdf{background:#b71c1c;color:#fff}
+
+/* ==================================================
+   TABLE
+================================================== */
+.table-wrapper{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#ffffff;
+  color:#003366;
+}
+
+th,td{
+  border:1px solid #ccc;
+  padding:8px;
+  font-size:13px;
+}
+
+th{
+  background:#f2f4f6;
+}
+</style>
+</head>
+
+<body>
+
+<a href="dashboard.html" class="btn-back">⬅ Menu Utama</a>
+
+<header>
+  <img src="assets/img/logo.png" alt="Logo Adaro">
+  <h1>DATA RECORD</h1>
+  <p>Rekap data Operasional, Monitoring & Health Equipment</p>
+</header>
+
+<div class="container">
+
+  <div class="filter-grid">
+
+    <div>
+      <label>Lokasi</label>
+      <select id="lokasi">
+        <option value="all">All Location</option>
+        <option value="adaro">Adaro Indonesia</option>
+        <option value="sis">Sis ADMO</option>
+        <option value="sera">Sera</option>
+        <option value="maco">Maco</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Kategori Data</label>
+      <select id="filterKategori">
+        <option value="">-- Semua --</option>
+        <option value="OPS">Operasional</option>
+        <option value="MON">Monitoring</option>
+        <option value="HCE">Health Equipment</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-search" onclick="applyFilter()">TAMPILKAN DATA</button>
+    <button class="btn-excel">EXPORT EXCEL</button>
+    <button class="btn-pdf" onclick="exportPDF()">EXPORT PDF</button>
+  </div>
+
+  <div id="dataResult" style="display:none;">
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Jam</th>
+            <th>Lokasi</th>
+            <th>Code Unit</th>
+            <th>Shift</th>
+            <th>Jenis Pompa</th>
+            <th>Data</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="dataBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="assets/js/data-record.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>

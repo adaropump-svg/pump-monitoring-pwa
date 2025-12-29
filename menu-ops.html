@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>MENU OPS - ADARO PUMP MONITORING</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b1c2d">
+
+  <!-- THEME -->
+  <link rel="stylesheet" href="assets/css/app-theme.css">
+
+  <!-- LANGUAGE DATA (WAJIB) -->
+  <script src="lang-data.js"></script>
+
+  <!-- I18N ENGINE -->
+  <script src="i18n.js"></script>
+
+  <!-- APP CONFIG -->
+  <script src="assets/js/app-config.js" defer></script>
+
+
+  <style>
+
+
+    * {
+      box-sizing: border-box;
+      ffont-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+
+    body {
+  margin: 0;
+  min-height: 100vh;
+  color: #ffffff;
+  padding-bottom: 30px;
+}
+
+
+    /* BACK BUTTON */
+    .btn-back {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background: #fff;
+      color: #003366;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 999;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 20px;
+    }
+
+    header img {
+      max-width: 90px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-size: 24px;
+      margin: 10px 0 5px;
+    }
+
+    header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.123);
+      color: #9ee92e;
+      border-radius: 14px;
+      padding: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .btn-save {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      background: #004f9f;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .btn-save:hover {
+      background: #003366;
+    }
+
+    @media (max-width: 768px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="dashboard.html" class="btn-back" data-i18n="btn.back">⬅ Menu Utama</a>
+
+
+<header>
+  <img src="assets/img/logo.png" alt="Logo Adaro">
+  <h1 data-i18n="ops.title">MENU INPUT DATA OPERATION</h1>
+<p data-i18n="ops.subtitle">Formulir pencatatan operasional pompa</p>
+
+</header>
+
+<div class="container">
+  <form id="opsForm">
+
+  <!-- AUTO DATE TIME -->
+  <div class="row">
+    <div class="form-group">
+      <label data-i18n="ops.date">Tanggal</label>
+      <input type="date" id="tanggal" readonly>
+    </div>
+
+    <div class="form-group">
+      <label data-i18n="ops.time">Jam</label>
+      <input type="time" id="jam" readonly>
+    </div>
+  </div>
+
+  <!-- LOKASI & CUACA -->
+  <div class="row">
+    <div class="form-group">
+      <label data-i18n="ops.location">Lokasi</label>
+      <select id="lokasi">
+  <option value="">-- Pilih Lokasi --</option>
+  <option value="adaro">Adaro Indonesia</option>
+  <option value="sis">Sis ADMO</option>
+  <option value="sera">Sera</option>
+  <option value="maco">Maco</option>
+</select>
+    </div>
+
+    <div class="form-group">
+      <label data-i18n="ops.weather">Cuaca</label>
+      <select>
+        <option>Cerah</option>
+        <option>Mendung</option>
+        <option>Gerimis</option>
+        <option>Hujan</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- SHIFT & JENIS POMPA -->
+  <div class="row">
+    <div class="form-group">
+      <label data-i18n="ops.shift">Shift</label>
+      <select id="shift">
+  <option value="">-- Pilih Shift --</option>
+  <option value="Siang">Siang (06.00 - 18.00)</option>
+  <option value="Malam">Malam (18.00 - 06.00)</option>
+</select>
+
+    </div>
+
+    <div class="form-group">
+      <label data-i18n="ops.pumpType">Jenis Pompa</label>
+      <select id="jenisPompa">
+        <option value="">-- Pilih --</option>
+        <option value="elektrik">Elektrik Pump</option>
+        <option value="diesel">Diesel Pump</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- CODE UNIT -->
+  <div class="form-group">
+    <label data-i18n="ops.unitCode">Code Unit</label>
+    <select id="codeUnit">
+      <option value="">-- Pilih Code Unit --</option>
+    </select>
+  </div>
+
+  <!-- JAM START STOP -->
+  <div class="row">
+    <div class="form-group">
+      <label data-i18n="ops.startTime">Jam Start</label>
+      <input type="time">
+    </div>
+
+    <div class="form-group">
+      <label data-i18n="ops.stopTime">Jam Stop</label>
+      <input type="time">
+    </div>
+  </div>
+
+  <!-- KWH (ELEKTRIK) -->
+  <div id="kwhField" class="row">
+    <div class="form-group">
+      <label data-i18n="ops.kwhStart">KWH Awal</label>
+      <input type="number">
+    </div>
+
+    <div class="form-group">
+      <label data-i18n="ops.kwhEnd">KWH Akhir</label>
+      <input type="number">
+    </div>
+  </div>
+
+  <!-- REFUELING (DIESEL) -->
+  <div id="fuelField" class="form-group" style="display:none">
+    <label data-i18n="ops.refuel">Refueling (Liter)</label>
+    <input type="number">
+  </div>
+
+  <!-- VOLUME -->
+  <div class="row">
+    <div class="form-group">
+      <label data-i18n="ops.volStart">Volume Awal (m³)</label>
+      <input type="number" id="volAwal">
+    </div>
+
+    <div class="form-group">
+      <label data-i18n="ops.volEnd">Volume Akhir (m³)</label>
+      <input type="number" id="volAkhir">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label data-i18n="ops.totalVol">Total Volume (m³)</label>
+    <input type="number" id="totalVolume" readonly>
+  </div>
+
+    <button class="btn-save" type="submit" data-i18n="btn.save">SIMPAN</button>
+
+  </form>
+</div>
+
+
+<script>
+  // AUTO DATE & TIME
+  const now = new Date();
+  document.getElementById("tanggal").value =
+    now.toISOString().slice(0,10);
+  document.getElementById("jam").value =
+    now.toTimeString().slice(0,5);
+
+  // JENIS POMPA LOGIC
+  document.getElementById("jenisPompa").addEventListener("change", function () {
+    const kwh = document.getElementById("kwhField");
+    const fuel = document.getElementById("fuelField");
+
+    if (this.value === "elektrik") {
+      kwh.style.display = "grid";
+      fuel.style.display = "none";
+    } else if (this.value === "diesel") {
+      kwh.style.display = "none";
+      fuel.style.display = "block";
+    }
+  });
+
+  // TOTAL VOLUME
+  document.getElementById("volAkhir").addEventListener("input", () => {
+    const awal = Number(document.getElementById("volAwal").value || 0);
+    const akhir = Number(document.getElementById("volAkhir").value || 0);
+    document.getElementById("totalVolume").value = akhir - awal;
+  });
+
+  // ===============================
+  // DATA CODE UNIT PER LOKASI
+  // ===============================
+  const dataUnit = {
+    adaro: ["MP-01", "MP-02", "MP-06", "MP-08", "BP-01", "BP-02"],
+    sis: ["ATS-100", "ATS-150", "ATS-200"],
+    sera: ["ATS-131", "ATS-132", "ATS-134", "ATS-321"],
+    maco: ["ATS-211", "ATS-213", "ATS-214"]
+  };
+
+  const lokasiSelect = document.getElementById("lokasi");
+  const codeUnitSelect = document.getElementById("codeUnit");
+
+  lokasiSelect.addEventListener("change", function () {
+    const lokasi = this.value;
+
+    codeUnitSelect.innerHTML =
+      '<option value="">-- Pilih Code Unit --</option>';
+
+    if (!lokasi) return;
+
+    dataUnit[lokasi].forEach(unit => {
+      const opt = document.createElement("option");
+      opt.value = unit;
+      opt.textContent = unit;
+      codeUnitSelect.appendChild(opt);
+    });
+  });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("opsForm");
+
+  if(form){
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let DATA_RECORD = JSON.parse(localStorage.getItem("DATA_RECORD")) || [];
+
+    const dataOPS = {
+  kategori: "OPS",
+  tanggal: document.getElementById("tanggal").value,
+  jam: document.getElementById("jam").value,
+  lokasi: document.getElementById("lokasi").value,
+  codeUnit: document.getElementById("codeUnit").value,
+  shift: document.getElementById("shift").value,
+  jenisPompa: document.getElementById("jenisPompa").value,
+  data: document.getElementById("totalVolume").value,
+  createdAt: new Date().toISOString()
+};
+
+
+    DATA_RECORD.push(dataOPS);
+    localStorage.setItem("DATA_RECORD", JSON.stringify(DATA_RECORD));
+
+    alert("Data OPS berhasil disimpan");
+
+    setTimeout(() => {
+      form.reset();
+      document.getElementById("totalVolume").value = "";
+      document.getElementById("kwhField").style.display = "grid";
+      document.getElementById("fuelField").style.display = "none";
+    }, 150);
+  });
+}
+
+</script>
+<script src="app-setting.js"></script>
+
+</body>
+</html>
+
+
+
+

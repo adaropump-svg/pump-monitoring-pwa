@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#003366">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+  background:#000;
+  position:relative;
+  overflow:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url("assets/img/bg.jpg") center/cover no-repeat;
+  z-index:-1;
+}
+
+
+
+.login-card{
+  width:100%;
+  max-width:420px;
+  padding:32px 28px;
+  background:#ffffff;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 12px 35px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   TITLE
+========================= */
+.login-header{
+  margin-bottom:20px;
+}
+
+.title-main{
+  font-size:36px;
+  font-weight:900;
+  letter-spacing:4px;
+  color:#003366;
+}
+
+.title-sub{
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:2.5px;
+  margin-top:6px;
+  color:#005599;
+}
+
+.logo{
+  width:95px;
+  display:block;
+  margin:16px auto 26px;
+}
+
+.subtitle{
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:18px;
+  color:#555;
+}
+
+/* =========================
+   LOGIN MODE (FINAL FIX)
+========================= */
+.login-mode{
+  text-align:left;
+  margin-bottom:10px;
+}
+
+.login-mode label{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:15px;
+  font-weight:500;
+  margin-bottom:14px;
+  cursor:pointer;
+}
+
+.login-mode input[type="radio"]{
+  margin:0;
+  flex-shrink:0;
+}
+
+/* =========================
+   INPUT & BUTTON
+========================= */
+input[type="password"]{
+  width:100%;
+  padding:14px;
+  margin:18px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  background:#004f9f;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#003c7a;
+}
+
+/* =========================
+   APP SIGNATURE
+========================= */
+.app-signature{
+  position:fixed;
+  bottom:10px;
+  width:100%;
+  text-align:center;
+  font-size:11px;
+  font-weight:500;
+  color:rgba(255,255,255,0.75);
+  letter-spacing:0.5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login-card">
+
+  <div class="login-header">
+    <div class="title-main">ADARO</div>
+    <div class="title-sub">PUMP MONITORING</div>
+  </div>
+
+  <img src="assets/img/logo.png" class="logo" alt="Logo Adaro">
+
+  <p class="subtitle">CHOOSE LOGIN MODE</p>
+
+  <div class="login-mode">
+    <label>
+      <input type="radio" name="mode" value="input">
+      INPUT & MONITORING
+    </label>
+
+    <label>
+      <input type="radio" name="mode" value="monitor">
+      MONITORING ONLY
+    </label>
+
+    <label>
+      <input type="radio" name="mode" value="admin">
+      ADMIN (DATA MANAGEMENT)
+</label>
+  </div>
+
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">LOGIN</button>
+
+</div>
+
+<script>
+function login(){
+  const mode=document.querySelector('input[name="mode"]:checked');
+  const password=document.getElementById("password").value;
+
+  if(!mode){
+    alert("CHOOSE LOGIN MODE");
+    return;
+  }
+
+  if(mode.value==="input" && password==="adaro123"){
+    sessionStorage.setItem("loginMode","input");
+    window.location.href="dashboard.html";
+  }
+  else if(mode.value==="monitor" && password==="adaro321"){
+    sessionStorage.setItem("loginMode","monitor");
+    window.location.href="dashboard.html";
+  }
+  else if(mode.value==="admin" && password==="admin@adaro"){
+  sessionStorage.setItem("loginMode","admin");
+  window.location.href="dashboard.html";
+}
+  else{
+    alert("Password salah");
+  }
+}
+</script>
+
+<script>
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("./service-worker.js");
+}
+</script>
+<div class="app-signature">
+  App created by: wahyu.effendi@adaro.com
+</div>
+<script src="assets/js/app-setting.js"></script>
+<script>
+/* HARD STOP HEADER GLASS FROM APP-CONFIG */
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.body.dataset.page === "data-record") {
+    const header = document.querySelector("header");
+    if (!header) return;
+
+    header.style.background = "none";
+    header.style.backdropFilter = "none";
+    header.style.webkitBackdropFilter = "none";
+    header.style.boxShadow = "none";
+
+    // bunuh pseudo element kalau disuntik via JS
+    header.classList.remove("glass", "glass-header", "header-glass");
+  }
+});
+</script>
+
+</body>
+</html>
