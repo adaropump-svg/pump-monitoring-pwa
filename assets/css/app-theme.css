@@ -1,7 +1,7 @@
 /* =====================================================
    GLOBAL APP THEME
    ADARO PUMP MONITORING
-   FINAL STABLE VERSION
+   FINAL – CLEAN & STABLE
 ===================================================== */
 
 /* =========================
@@ -9,51 +9,53 @@
 ========================= */
 *{
   box-sizing:border-box;
-  font-family:"Segoe UI",Roboto,Arial,sans-serif;
+  font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;
 }
 
 /* =========================
-   BODY GLOBAL
+   BODY GLOBAL (SATU-SATUNYA)
 ========================= */
+html, body{
+  height:100%;
+}
+
 body{
   margin:0;
   min-height:100vh;
   background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-    url("../img/bg.jpg") center center no-repeat;
-  background-size:cover;
-  background-attachment:fixed;
+    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+    url("../img/bg.jpg") center / cover no-repeat fixed;
   color:#fff;
 }
 
 /* =========================
    HEADER DEFAULT
-   (UNTUK OPS / MON / HCE)
+   (OPS / MON / HCE / DASHBOARD)
 ========================= */
 header{
   text-align:center;
-  padding:30px 20px 15px;
+  padding:28px 20px 16px;
   margin:0 auto 20px;
   max-width:1200px;
-  background:rgba(255,255,255,.08);
+  background:rgba(255,255,255,0.08);
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
   border-radius:0 0 18px 18px;
 }
 
 header img{
-  max-width:90px;
-  margin-bottom:10px;
+  max-width:80px;
+  margin-bottom:8px;
 }
 
 header h1{
-  font-size:24px;
-  margin:10px 0 5px;
+  font-size:22px;
+  margin:8px 0 4px;
 }
 
 header p{
-  font-size:14px;
-  opacity:.9;
+  font-size:13px;
+  opacity:0.9;
 }
 
 /* =========================
@@ -62,13 +64,13 @@ header p{
 .container{
   max-width:1200px;
   margin:0 auto 30px;
-  background:rgba(255,255,255,.12);
+  background:rgba(255,255,255,0.12);
   border-radius:14px;
-  padding:20px;
+  padding:18px;
 }
 
 /* =========================
-   BUTTON BACK
+   BACK BUTTON
 ========================= */
 .btn-back{
   position:fixed;
@@ -76,17 +78,17 @@ header p{
   left:15px;
   background:#fff;
   color:#003366;
-  padding:10px 16px;
+  padding:9px 14px;
   border-radius:8px;
-  font-size:14px;
+  font-size:13px;
   font-weight:600;
   text-decoration:none;
   z-index:999;
 }
 
 /* =====================================================
-   🔥 HARD OVERRIDE — DATA RECORD ONLY
-   (NO BLUR, NO BOX, NO PANEL)
+   HARD OVERRIDE — DATA RECORD ONLY
+   (NO BLUR • NO PANEL • NO BOX)
 ===================================================== */
 body[data-page="data-record"] header{
   background:transparent !important;
@@ -94,8 +96,8 @@ body[data-page="data-record"] header{
   -webkit-backdrop-filter:none !important;
   box-shadow:none !important;
   border-radius:0 !important;
+  padding:50px 20px 18px;
   margin-bottom:10px;
-  padding:60px 20px 20px;
 }
 
 body[data-page="data-record"] header::before,
@@ -113,8 +115,7 @@ body[data-page="data-record"] header *{
 
 /* CONTAINER DATA RECORD */
 body[data-page="data-record"] .container{
-  background:rgba(255,255,255,.12);
-  box-shadow:none;
+  background:rgba(255,255,255,0.12);
 }
 
 /* =========================
@@ -127,10 +128,10 @@ table{
   color:#003366;
 }
 
-th,td{
+th, td{
   border:1px solid #ccc;
-  padding:8px;
-  font-size:13px;
+  padding:7px;
+  font-size:12.5px;
 }
 
 th{
@@ -138,15 +139,23 @@ th{
 }
 
 /* =========================
-   FORM GLOBAL
+   FORM & BUTTON GLOBAL
 ========================= */
 label{
-  font-size:13px;
+  font-size:12.5px;
   font-weight:600;
 }
 
 select,
 input,
 button{
-  font-size:13px;
+  font-size:12.5px;
 }
+
+button{
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+
