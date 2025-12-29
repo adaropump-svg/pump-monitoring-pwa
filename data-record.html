@@ -2,51 +2,34 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>DATA RECORD - ADARO PUMP MONITORING</title>
+<title>DATA RECORD | ADARO PUMP MONITORING</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- GLOBAL THEME -->
 <link rel="stylesheet" href="assets/css/app-theme.css">
-
-<!-- CONFIG -->
-<script src="assets/js/app-config.js" defer></script>
+<script src="assets/app-config.js" defer></script>
 
 <!-- PDF -->
 <script src="https://cdn.jsdelivr.net/npm/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
 
 <style>
-/* =========================
-   DATA RECORD OVERRIDE ONLY
-========================= */
+/* ================= GLOBAL ================= */
+*{
+  box-sizing:border-box;
+  font-family:"Segoe UI",Roboto,Arial,sans-serif;
+}
+html,body{height:100%;}
 
-/* JANGAN DUPLIKASI BACKGROUND */
 body{
-  background: none !important;
+  margin:0;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url("assets/img/bg.jpg") no-repeat center center fixed;
+  background-size:cover;
+  color:#fff;
 }
 
-/* MATIKAN KARTU PUTIH */
-body[data-page="data-record"] .container{
-  background: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-/* HEADER TANPA PANEL */
-header{
-  text-align:center;
-  padding:30px 20px 15px;
-  margin:0 auto 20px;
-  max-width:1200px;
-  background:none !important;
-  box-shadow:none !important;
-}
-
-header img{max-width:90px;}
-header h1{margin:10px 0 5px;font-size:24px;}
-header p{font-size:14px;opacity:.9;}
-
-/* BACK BUTTON */
+/* ================= BACK ================= */
 .btn-back{
   position:fixed;
   top:15px;
@@ -58,40 +41,118 @@ header p{font-size:14px;opacity:.9;}
   font-size:14px;
   font-weight:600;
   text-decoration:none;
-  z-index:999;
+  z-index:1000;
+}
+
+/* ================= HEADER ================= */
+header{
+  text-align:center;
+  padding:30px 20px 15px;
+  max-width:1200px;
+  margin:auto;
+}
+header img{max-width:90px;}
+header h1{margin:10px 0 5px;font-size:24px;}
+header p{font-size:14px;opacity:.9;}
+
+/* ================= CARD ================= */
+.container{
+  max-width:1200px;
+  margin:0 auto 40px;
+  background:rgba(255,255,255,.95);
+  color:#003366;
+  border-radius:14px;
+  padding:20px;
+}
+
+/* ================= FILTER ================= */
+.filter-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+  margin-bottom:20px;
+}
+label{font-size:13px;font-weight:600;}
+select{
+  width:100%;
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  font-size:13px;
+}
+
+/* ================= BUTTON ================= */
+.action-bar{
+  display:flex;
+  gap:12px;
+  margin-bottom:15px;
+  flex-wrap:wrap;
+}
+.action-bar button{
+  padding:10px 16px;
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+}
+.btn-search{background:#004f9f;color:#fff;}
+.btn-excel{background:#1d6f42;color:#fff;}
+.btn-pdf{background:#b02a37;color:#fff;}
+
+/* ================= TABLE ================= */
+.table-wrapper{overflow-x:auto;}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+th,td{
+  border:1px solid #ccc;
+  padding:6px 8px;
+  text-align:center;
+  white-space:nowrap;
+}
+th{background:#004f9f;color:#fff;}
+.sheet-title{font-weight:700;margin:15px 0 8px;}
+.btn-edit{
+  background:#ffc107;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
 }
 </style>
 </head>
 
-<body data-page="data-record">
+<body>
 
 <a href="dashboard.html" class="btn-back">⬅ Menu Utama</a>
 
 <header>
   <img src="assets/img/logo.png">
   <h1>DATA RECORD</h1>
-  <p>Rekap data Operasional, Monitoring & Health Equipment</p>
+  <p>Rekap Data Operasional, Monitoring & Health Equipment</p>
 </header>
 
 <div class="container">
 
-<!-- ===== FILTER ===== -->
+<!-- FILTER -->
 <div class="filter-grid">
 
   <div>
     <label>Lokasi</label>
     <select id="lokasi">
-      <option value="all">All Location</option>
+      <option value="">-- Pilih --</option>
       <option value="adaro">Adaro Indonesia</option>
-      <option value="sis">Sis ADMO</option>
-      <option value="sera">Sera</option>
-      <option value="maco">Maco</option>
+      <option value="sis">SIS ADMO</option>
+      <option value="sera">SERA</option>
+      <option value="maco">MACO</option>
     </select>
   </div>
 
   <div>
     <label>Kategori Data</label>
-    <select id="filterKategori">
+    <select id="kategori">
       <option value="">-- Semua --</option>
       <option value="OPS">Operasional</option>
       <option value="MON">Monitoring</option>
@@ -101,7 +162,7 @@ header p{font-size:14px;opacity:.9;}
 
   <div>
     <label>Tahun</label>
-    <select>
+    <select id="tahun">
       <option value="">-- Pilih --</option>
       <option>2026</option>
       <option>2027</option>
@@ -111,31 +172,20 @@ header p{font-size:14px;opacity:.9;}
 
   <div>
     <label>Bulan</label>
-    <select>
+    <select id="bulan">
       <option value="">-- Pilih --</option>
-      <option>Januari</option><option>Februari</option><option>Maret</option>
-      <option>April</option><option>Mei</option><option>Juni</option>
-      <option>Juli</option><option>Agustus</option><option>September</option>
-      <option>Oktober</option><option>November</option><option>Desember</option>
-    </select>
-  </div>
-
-  <div>
-    <label>Minggu</label>
-    <select>
-      <option value="">-- Optional --</option>
-      <option>Week 1</option><option>Week 2</option>
-      <option>Week 3</option><option>Week 4</option>
-    </select>
-  </div>
-
-  <div>
-    <label>Tanggal</label>
-    <select>
-      <option value="">-- Optional --</option>
-      <script>
-        for(let i=1;i<=31;i++) document.write(`<option>${i}</option>`);
-      </script>
+      <option>Januari</option>
+      <option>Februari</option>
+      <option>Maret</option>
+      <option>April</option>
+      <option>Mei</option>
+      <option>Juni</option>
+      <option>Juli</option>
+      <option>Agustus</option>
+      <option>September</option>
+      <option>Oktober</option>
+      <option>November</option>
+      <option>Desember</option>
     </select>
   </div>
 
@@ -148,7 +198,8 @@ header p{font-size:14px;opacity:.9;}
 
   <div>
     <label>Jenis Pompa</label>
-    <select>
+    <select id="jenisPompa">
+      <option value="">-- Semua --</option>
       <option>Elektrik Pump</option>
       <option>Diesel Pump</option>
     </select>
@@ -156,13 +207,15 @@ header p{font-size:14px;opacity:.9;}
 
 </div>
 
+<!-- ACTION -->
 <div class="action-bar">
   <button class="btn-search" onclick="applyFilter()">TAMPILKAN DATA</button>
-  <button class="btn-excel">EXPORT EXCEL</button>
   <button class="btn-pdf" onclick="exportPDF()">EXPORT PDF</button>
 </div>
 
+<!-- RESULT -->
 <div id="dataResult" style="display:none;">
+  <div class="sheet-title">Hasil Data</div>
   <div class="table-wrapper">
     <table>
       <thead>
@@ -184,7 +237,91 @@ header p{font-size:14px;opacity:.9;}
 
 </div>
 
-<script src="assets/js/data-record.js"></script>
+<!-- ================= SCRIPT ================= -->
+<script>
+/* ========= DATA STORAGE ========= */
+let DATA_RECORD = JSON.parse(localStorage.getItem("DATA_RECORD")) || [];
+const loginMode = sessionStorage.getItem("loginMode");
+
+/* ========= UNIT DINAMIS ========= */
+const unitData={
+  adaro:["MP 01","MP 02","MP 06","MP 08","BP 01","BP 02"],
+  sis:Array.from({length:101},(_,i)=>"ATS "+(100+i)),
+  sera:["ATS 131","ATS 132","ATS 134","ATS 321"],
+  maco:["ATS 211","ATS 213","ATS 214"]
+};
+
+document.getElementById("lokasi").addEventListener("change",e=>{
+  const unit=document.getElementById("codeUnit");
+  unit.innerHTML='<option value="">-- Pilih --</option>';
+  if(!unitData[e.target.value])return;
+  unitData[e.target.value].forEach(u=>{
+    unit.innerHTML+=`<option>${u}</option>`;
+  });
+});
+
+/* ========= FILTER ========= */
+function applyFilter(){
+  const lokasi=document.getElementById("lokasi").value;
+  const kategori=document.getElementById("kategori").value;
+  const unit=document.getElementById("codeUnit").value;
+
+  if(!lokasi||!kategori||!unit){
+    alert("Lengkapi filter utama");
+    return;
+  }
+
+  const hasil=DATA_RECORD.filter(d=>
+    d.lokasi===lokasi &&
+    d.kategori===kategori &&
+    d.codeUnit===unit
+  );
+
+  renderTable(hasil);
+  document.getElementById("dataResult").style.display="block";
+}
+
+/* ========= TABLE ========= */
+function renderTable(data){
+  const tbody=document.getElementById("dataBody");
+  tbody.innerHTML="";
+
+  if(data.length===0){
+    tbody.innerHTML=`<tr><td colspan="8">Data tidak ditemukan</td></tr>`;
+    return;
+  }
+
+  data.forEach((d,i)=>{
+    tbody.innerHTML+=`
+      <tr>
+        <td>${d.tanggal}</td>
+        <td>${d.jam}</td>
+        <td>${d.lokasi}</td>
+        <td>${d.codeUnit}</td>
+        <td>${d.shift}</td>
+        <td>${d.jenisPompa}</td>
+        <td>${JSON.stringify(d.data)}</td>
+        <td>
+          ${loginMode==="admin"
+            ? `<button class="btn-edit" onclick="editData(${i})">✏️</button>`
+            : ``}
+        </td>
+      </tr>`;
+  });
+}
+
+/* ========= PDF ========= */
+function exportPDF(){
+  const area=document.getElementById("dataResult");
+  if(area.style.display==="none"){
+    alert("Data belum ditampilkan");
+    return;
+  }
+  html2pdf().from(area).save("data-record.pdf");
+}
+</script>
+
 </body>
 </html>
+
 
